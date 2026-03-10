@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd \"/Users/dushes/Documents/Seoul travel planner 🇰🇷\" && npm install)",
+      "Bash(cd \"/Users/dushes/Documents/Seoul travel planner 🇰🇷\" && timeout 3 npm start || true)"
+    ]
+  }
+}

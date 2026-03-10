@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="theme-color" content="#F7F3EE">
+  <title>Seoul Trip 2026</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #F7F3EE;
+      --text: #1A1410;
+      --accent: #C4705A;
+      --day1: #8B3A3A;
+      --day2: #2C4A6E;
+      --day3: #3D6B4F;
+      --done: #6B7B6B;
+      --card-bg: #FFFFFF;
+      --muted: #888880;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      touch-action: manipulation;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding-bottom: calc(80px + env(safe-area-inset-bottom));
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Playfair Display', serif;
+    }
+
+    button, .card-action {
+      min-height: 44px;
+      min-width: 44px;
+    }
+
+    input, textarea {
+      font-size: 16px;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      padding: 20px 16px 12px;
+    }
+
+    .header h1 {
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    .header .subtitle {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg);
+      padding: 8px 16px;
+      gap: 8px;
+    }
+
+    .tab {
+      flex: 1;
+      padding: 10px 8px;
+      border: none;
+      border-radius: 12px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      background: var(--card-bg);
+      color: var(--text);
+      transition: all 0.2s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+
+    .tab.active[data-day="1"] { background: var(--day1); color: #fff; }
+    .tab.active[data-day="2"] { background: var(--day2); color: #fff; }
+    .tab.active[data-day="3"] { background: var(--day3); color: #fff; }
+
+    /* Progress */
+    .progress-section {
+      padding: 8px 16px 4px;
+    }
+
+    .progress-text {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 6px;
+      background: #E8E4DF;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 0.3s ease;
+    }
+
+    .progress-fill[data-day="1"] { background: var(--day1); }
+    .progress-fill[data-day="2"] { background: var(--day2); }
+    .progress-fill[data-day="3"] { background: var(--day3); }
+
+    /* Transport accordion */
+    .transport-hint {
+      margin: 8px 16px;
+      background: var(--card-bg);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+
+    .transport-toggle {
+      width: 100%;
+      padding: 12px 16px;
+      border: none;
+      background: none;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .transport-toggle::after {
+      content: '\25BC';
+      font-size: 10px;
+      color: var(--muted);
+      transition: transform 0.2s;
+    }
+
+    .transport-hint.open .transport-toggle::after {
+      transform: rotate(180deg);
+    }
+
+    .transport-body {
+      display: none;
+      padding: 0 16px 12px;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .transport-hint.open .transport-body {
+      display: block;
+    }
+
+    /* Cards */
+    .cards {
+      padding: 8px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 14px;
+      padding: 14px 14px 14px 18px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      position: relative;
+      overflow: hidden;
+      transition: opacity 0.3s, background 0.3s;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+    }
+
+    .card[data-day="1"]::before { background: var(--day1); }
+    .card[data-day="2"]::before { background: var(--day2); }
+    .card[data-day="3"]::before { background: var(--day3); }
+
+    .card.done {
+      opacity: 0.45;
+      background: #F0EDE8;
+    }
+
+    .card.done .card-title {
+      text-decoration: line-through;
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .card-icon-time {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-icon {
+      font-size: 18px;
+    }
+
+    .card-time {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    /* Custom checkbox */
+    .checkbox {
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .checkbox-circle {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid #D0CBC4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      font-size: 14px;
+      color: transparent;
+    }
+
+    .checkbox.checked .checkbox-circle {
+      border-color: var(--done);
+      background: var(--done);
+      color: #fff;
+    }
+
+    .card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 17px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .card-note {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .card-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 8px 12px;
+      background: var(--bg);
+      border: none;
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text);
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .card-action:active {
+      background: #E8E4DF;
+    }
+
+    /* Budget card */
+    .budget-card {
+      background: var(--card-bg);
+      border-radius: 14px;
+      padding: 16px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+      text-align: center;
+    }
+
+    .budget-card h3 {
+      font-size: 15px;
+      margin-bottom: 6px;
+    }
+
+    .budget-card p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* Useful section */
+    .useful-section {
+      padding: 16px;
+      margin-top: 8px;
+    }
+
+    .useful-section h2 {
+      font-size: 20px;
+      margin-bottom: 12px;
+    }
+
+    .accordion {
+      background: var(--card-bg);
+      border-radius: 12px;
+      margin-bottom: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+
+    .accordion-toggle {
+      width: 100%;
+      padding: 14px 16px;
+      border: none;
+      background: none;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .accordion-toggle::after {
+      content: '\25BC';
+      font-size: 10px;
+      color: var(--muted);
+      transition: transform 0.2s;
+    }
+
+    .accordion.open .accordion-toggle::after {
+      transform: rotate(180deg);
+    }
+
+    .accordion-body {
+      display: none;
+      padding: 0 16px 14px;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .accordion.open .accordion-body {
+      display: block;
+    }
+
+    .accordion-body a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .accordion-body a:active {
+      opacity: 0.7;
+    }
+
+    /* Reset button */
+    .footer {
+      text-align: center;
+      padding: 24px 16px 32px;
+    }
+
+    .reset-btn {
+      padding: 12px 24px;
+      border: 1px solid #D0CBC4;
+      border-radius: 10px;
+      background: none;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      color: var(--muted);
+      cursor: pointer;
+    }
+
+    .reset-btn:active {
+      background: #E8E4DF;
+    }
+
+    /* FAB */
+    .fab {
+      position: fixed;
+      bottom: calc(24px + env(safe-area-inset-bottom));
+      right: 20px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      font-size: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(196,112,90,0.4);
+      cursor: pointer;
+      z-index: 200;
+      text-decoration: none;
+      transition: transform 0.2s;
+    }
+
+    .fab:active {
+      transform: scale(0.92);
+    }
+
+    /* Day content visibility */
+    .day-content {
+      display: none;
+    }
+
+    .day-content.active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Seoul Trip 2026</h1>
+    <div class="subtitle">13–15 марта · Stay 42 Dongmyo</div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab" data-day="1" onclick="switchDay(1)">Пт 13</button>
+    <button class="tab" data-day="2" onclick="switchDay(2)">Сб 14</button>
+    <button class="tab" data-day="3" onclick="switchDay(3)">Вс 15</button>
+  </div>
+
+  <!-- Day 1 -->
+  <div class="day-content" data-day="1">
+    <div class="progress-section">
+      <div class="progress-text" id="progress-text-1"></div>
+      <div class="progress-bar"><div class="progress-fill" data-day="1" id="progress-fill-1"></div></div>
+    </div>
+    <div class="transport-hint" id="transport-1">
+      <button class="transport-toggle" onclick="toggleTransport(1)">🚇 Транспорт дня</button>
+      <div class="transport-body">AREX Инчхон → Seoul Station (43 мин, ₩9 500) → Линия 1 до Dongmyo</div>
+    </div>
+    <div class="cards" id="cards-1"></div>
+  </div>
+
+  <!-- Day 2 -->
+  <div class="day-content" data-day="2">
+    <div class="progress-section">
+      <div class="progress-text" id="progress-text-2"></div>
+      <div class="progress-bar"><div class="progress-fill" data-day="2" id="progress-fill-2"></div></div>
+    </div>
+    <div class="transport-hint" id="transport-2">
+      <button class="transport-toggle" onclick="toggleTransport(2)">🚇 Транспорт дня</button>
+      <div class="transport-body">Метро Линия 3 от Донмё → ст. Ангук / Кёнбоккун (~15 мин)</div>
+    </div>
+    <div class="cards" id="cards-2"></div>
+  </div>
+
+  <!-- Day 3 -->
+  <div class="day-content" data-day="3">
+    <div class="progress-section">
+      <div class="progress-text" id="progress-text-3"></div>
+      <div class="progress-bar"><div class="progress-fill" data-day="3" id="progress-fill-3"></div></div>
+    </div>
+    <div class="transport-hint" id="transport-3">
+      <button class="transport-toggle" onclick="toggleTransport(3)">🚇 Транспорт дня</button>
+      <div class="transport-body">Метро Линия 3 → ст. Кёнбоккун (выход 2). AREX Seoul Station → Инчхон в 15:30 → прибытие 16:13. Вылет 17:50.</div>
+    </div>
+    <div class="cards" id="cards-3"></div>
+  </div>
+
+  <!-- Useful section -->
+  <div class="useful-section">
+    <h2>Полезное</h2>
+
+    <div class="accordion" id="acc-transport">
+      <button class="accordion-toggle" onclick="toggleAccordion('acc-transport')">🚇 Транспорт</button>
+      <div class="accordion-body">
+        T-money: ₩2 500 / ~$1.8 / ~165₽<br>
+        Тариф метро: ₩1 400–1 600 / $1–1.15 / 90–105₽<br>
+        AREX Экспресс Инчхон → Seoul Station: 43 мин, ₩9 500 (~$6.9 / ~620₽)<br>
+        Такси: приложение Kakao T
+      </div>
+    </div>
+
+    <div class="accordion" id="acc-currency">
+      <button class="accordion-toggle" onclick="toggleAccordion('acc-currency')">💱 Курс</button>
+      <div class="accordion-body">
+        1 USD ≈ 90 ₽<br>
+        1 000 KRW ≈ $0.73 / 66 ₽<br>
+        10 000 KRW ≈ $7.3 / 660 ₽
+      </div>
+    </div>
+
+    <div class="accordion" id="acc-links">
+      <button class="accordion-toggle" onclick="toggleAccordion('acc-links')">📍 Быстрые ссылки Maps</button>
+      <div class="accordion-body">
+        <a href="https://www.google.com/maps/search/?api=1&query=37.4602,126.4407" target="_blank">Аэропорт Инчхон</a><br>
+        <a href="https://www.google.com/maps/search/?api=1&query=37.5547,126.9706" target="_blank">Seoul Station (AREX)</a><br>
+        <a href="https://www.google.com/maps/search/?api=1&query=37.5716,127.0114" target="_blank">Stay 42 Dongmyo</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <button class="reset-btn" onclick="resetProgress()">Сбросить прогресс</button>
+  </div>
+
+  <!-- FAB -->
+  <a class="fab" href="https://www.google.com/maps/dir/?api=1&destination=37.5716,127.0114" target="_blank">🏠</a>
+
+  <script>
+    const ICONS = {
+      culture: '🏛', food: '🍜', scenic: '🌿',
+      market: '🛍', transit: '🚇', rest: '🛏'
+    };
+
+    const DAYS = {
+      1: {
+        date: '2026-03-13',
+        title: 'Пт 13 Мар — Прилёт + Восточный Чонно',
+        budget: '$25–35 / 2 250–3 150₽',
+        items: [
+          { id: 1, time: '07:10–09:00', name: '✈ Прилёт → Stay 42 Dongmyo', lat: 37.5716, lng: 127.0114, type: 'transit', note: 'Купи T-money в аэропорту: ₩2 500' },
+          { id: 2, time: '09:00–11:00', name: 'Рынок Кванджан', lat: 37.5700, lng: 126.9996, type: 'food', note: 'Маяк-кимбап ₩3 000, бинтэток ₩5 000' },
+          { id: 3, time: '11:00–13:30', name: 'Деревня Иксон-дон', lat: 37.5737, lng: 126.9901, type: 'culture', note: 'Ханок-кафе, сикхе ₩4 000' },
+          { id: 4, time: '13:30–15:30', name: 'Ручей Чхонгечхон', lat: 37.5691, lng: 126.9787, type: 'scenic', note: 'Хоттеок у Чхонгечхон Плаза ₩2 000' },
+          { id: 5, time: '16:00–18:00', name: '🛏 Отдых в отеле', lat: 37.5716, lng: 127.0114, type: 'rest', note: '—' },
+          { id: 6, time: '18:30–20:00', name: 'Блошиный рынок Донмё', lat: 37.5718, lng: 127.0105, type: 'market', note: 'Только наличные' },
+          { id: 7, time: '20:00–21:30', name: 'Тток-покки, Синдан-дон', lat: 37.5635, lng: 127.0089, type: 'food', note: 'Тток-покки ₩7 000–10 000' }
+        ]
+      },
+      2: {
+        date: '2026-03-14',
+        title: 'Сб 14 Мар — Королевский Северный Сеул',
+        budget: '$35–45 / 3 150–4 050₽',
+        items: [
+          { id: 1, time: '08:45–12:00', name: 'Дворец Кёнбоккун', lat: 37.5796, lng: 126.9770, type: 'culture', note: 'Билет ₩3 000, в ханбоке бесплатно. Смена стражи 10:00' },
+          { id: 2, time: '12:00–13:30', name: 'Тосокчон Самгетан', lat: 37.5815, lng: 126.9699, type: 'food', note: 'Самгетан ₩17 000' },
+          { id: 3, time: '13:30–15:30', name: 'Деревня Букчон Ханок', lat: 37.5815, lng: 126.9850, type: 'culture', note: 'Смотровая Букчон-ро 5-гиль' },
+          { id: 4, time: '15:30–17:00', name: 'Самчхон-дон', lat: 37.5835, lng: 126.9820, type: 'scenic', note: 'Кофе Bora ₩8 000' },
+          { id: 5, time: '17:00–19:00', name: 'Инса-дон', lat: 37.5742, lng: 126.9856, type: 'market', note: 'Хоттеок ₩2 000' },
+          { id: 6, time: '19:00–21:00', name: 'Переулок Пимаголь', lat: 37.5700, lng: 126.9823, type: 'food', note: 'Хэмуль паджон ₩15 000 + макколли ₩8 000' }
+        ]
+      },
+      3: {
+        date: '2026-03-15',
+        title: 'Вс 15 Мар — Сочон + Чхандоккун → Вылет',
+        budget: '$30–40 / 2 700–3 600₽',
+        items: [
+          { id: 1, time: '09:00–10:30', name: 'Деревня Сочон', lat: 37.5787, lng: 126.9731, type: 'culture', note: 'Café Dalant ₩6 000' },
+          { id: 2, time: '10:30–13:30', name: 'Дворец Чхандоккун + Тайный сад', lat: 37.5794, lng: 126.9910, type: 'culture', note: 'Дворец ₩3 000 + Тайный сад ₩8 000. Бронь онлайн!' },
+          { id: 3, time: '13:30–14:30', name: 'Прощальный обед, Чонно 3-га', lat: 37.5737, lng: 126.9901, type: 'food', note: 'Сет-меню ₩12 000–15 000' },
+          { id: 4, time: '15:00–15:20', name: '🧳 Чекаут из отеля', lat: 37.5716, lng: 127.0114, type: 'transit', note: 'Такси до Seoul Station ~₩9 000' },
+          { id: 5, time: '15:30→16:13', name: 'AREX: Seoul Station → Инчхон', lat: 37.5547, lng: 126.9706, type: 'transit', note: '₩9 500 · посадка 17:50' }
+        ]
+      }
+    };
+
+    const STORAGE_KEY = 'seoul_2026_progress';
+    let currentDay = 1;
+
+    function getProgress() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+      } catch {
+        return {};
+      }
+    }
+
+    function saveProgress(progress) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+    }
+
+    function toggleCheck(day, itemId) {
+      const progress = getProgress();
+      const key = `day${day}_item${itemId}`;
+      if (progress[key]) {
+        delete progress[key];
+      } else {
+        progress[key] = true;
+      }
+      saveProgress(progress);
+      renderDay(day);
+    }
+
+    function renderDay(day) {
+      const data = DAYS[day];
+      const progress = getProgress();
+      const container = document.getElementById(`cards-${day}`);
+      container.innerHTML = '';
+
+      let doneCount = 0;
+
+      data.items.forEach(item => {
+        const key = `day${day}_item${item.id}`;
+        const isDone = !!progress[key];
+        if (isDone) doneCount++;
+
+        const card = document.createElement('div');
+        card.className = `card${isDone ? ' done' : ''}`;
+        card.setAttribute('data-day', day);
+
+        card.innerHTML = `
+          <div class="card-top">
+            <div class="card-icon-time">
+              <span class="card-icon">${ICONS[item.type]}</span>
+              <span class="card-time">${item.time}</span>
+            </div>
+            <div class="checkbox ${isDone ? 'checked' : ''}" onclick="toggleCheck(${day}, ${item.id})">
+              <div class="checkbox-circle">${isDone ? '✓' : ''}</div>
+            </div>
+          </div>
+          <div class="card-title">${item.name}</div>
+          <div class="card-note">${item.note}</div>
+          <div class="card-actions">
+            <a class="card-action" href="https://www.google.com/maps/search/?api=1&query=${item.lat},${item.lng}" target="_blank">📍 Maps</a>
+            <a class="card-action" href="https://www.google.com/maps/dir/?api=1&destination=${item.lat},${item.lng}" target="_blank">🗺 Маршрут</a>
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+
+      // Budget card
+      const budget = document.createElement('div');
+      budget.className = 'budget-card';
+      budget.innerHTML = `<h3>💰 Бюджет дня</h3><p>${data.budget}</p>`;
+      container.appendChild(budget);
+
+      // Progress
+      const total = data.items.length;
+      document.getElementById(`progress-text-${day}`).textContent = `Выполнено: ${doneCount} / ${total}`;
+      document.getElementById(`progress-fill-${day}`).style.width = `${(doneCount / total) * 100}%`;
+    }
+
+    function switchDay(day) {
+      currentDay = day;
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelector(`.tab[data-day="${day}"]`).classList.add('active');
+      document.querySelectorAll('.day-content').forEach(d => d.classList.remove('active'));
+      document.querySelector(`.day-content[data-day="${day}"]`).classList.add('active');
+      renderDay(day);
+    }
+
+    function toggleTransport(day) {
+      document.getElementById(`transport-${day}`).classList.toggle('open');
+    }
+
+    function toggleAccordion(id) {
+      document.getElementById(id).classList.toggle('open');
+    }
+
+    function resetProgress() {
+      if (confirm('Сбросить весь прогресс?')) {
+        localStorage.removeItem(STORAGE_KEY);
+        renderDay(currentDay);
+      }
+    }
+
+    function detectCurrentDay() {
+      const today = new Date().toISOString().slice(0, 10);
+      for (const [day, data] of Object.entries(DAYS)) {
+        if (data.date === today) return parseInt(day);
+      }
+      return 1;
+    }
+
+    // Init
+    const startDay = detectCurrentDay();
+    for (let d = 1; d <= 3; d++) renderDay(d);
+    switchDay(startDay);
+  </script>
+
+</body>
+</html>
