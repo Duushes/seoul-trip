@@ -4,130 +4,130 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="theme-color" content="#0F0F14">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#1e1e24">
   <title>Seoul Trip 2026</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🇰🇷</text></svg>">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0F0F14;
-      --bg-secondary: #16161D;
-      --text: #E8E6F0;
-      --text-secondary: #9B97B0;
-      --accent: #A78BFA;
-      --accent-soft: rgba(167, 139, 250, 0.15);
-      --accent-glow: rgba(167, 139, 250, 0.3);
-      --day1: #C084FC;
-      --day2: #818CF8;
-      --day3: #67E8F9;
-      --done: #6B7280;
-      --card-bg: rgba(22, 22, 29, 0.8);
-      --card-border: rgba(167, 139, 250, 0.1);
-      --muted: #706D83;
-      --dot-color: rgba(167, 139, 250, 0.08);
+      --bg: #1e1e24;
+      --bg-card: #26262e;
+      --text: #ececef;
+      --text-muted: #8b8b9e;
+      --accent: #a78bfa;
+      --accent-hover: #c4b5fd;
+      --accent-dim: rgba(167,139,250,0.10);
+      --accent-border: rgba(167,139,250,0.15);
+      --border: rgba(255,255,255,0.06);
+      --day1: #a78bfa;
+      --day2: #818cf8;
+      --day3: #67e8f9;
+      --done: #52525b;
+      --success: #34d399;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg);
+      background-image: radial-gradient(rgba(167,139,250,0.06) 1px, transparent 1px);
+      background-size: 20px 20px;
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      min-height: 100vh;
+      padding-bottom: calc(80px + env(safe-area-inset-bottom));
       touch-action: manipulation;
     }
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: var(--bg);
-      background-image: radial-gradient(var(--dot-color) 1px, transparent 1px);
-      background-size: 24px 24px;
-      color: var(--text);
-      padding-bottom: calc(80px + env(safe-area-inset-bottom));
-      -webkit-font-smoothing: antialiased;
-      min-height: 100vh;
-    }
+    button { font-family: inherit; }
 
-    h1, h2, h3 {
-      font-family: 'Playfair Display', serif;
-    }
-
-    button, .card-action {
-      min-height: 44px;
-      min-width: 44px;
-    }
-
-    input, textarea {
-      font-size: 16px;
-    }
-
-    /* Header */
+    /* ---- HEADER ---- */
     .header {
       text-align: center;
-      padding: 28px 16px 16px;
+      padding: 32px 20px 20px;
+      position: relative;
+    }
+
+    .header::before {
+      content: '';
+      position: absolute;
+      top: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 400px;
+      height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(ellipse, rgba(167,139,250,0.08) 0%, transparent 70%);
+      pointer-events: none;
     }
 
     .header h1 {
-      font-size: 26px;
-      font-weight: 600;
-      background: linear-gradient(135deg, var(--accent), #c4b5fd, #67e8f9);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      position: relative;
     }
 
     .header .subtitle {
       font-size: 13px;
-      color: var(--text-secondary);
+      color: var(--text-muted);
       margin-top: 6px;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.3px;
     }
 
-    /* Tabs */
+    /* ---- TABS ---- */
     .tabs {
       display: flex;
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(15, 15, 20, 0.85);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      padding: 8px 16px;
+      background: rgba(30,30,36,0.8);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: 10px 16px;
       gap: 8px;
+      border-bottom: 1px solid var(--border);
     }
 
     .tab {
       flex: 1;
       padding: 10px 8px;
-      border: 1px solid var(--card-border);
-      border-radius: 12px;
-      font-family: 'Inter', sans-serif;
+      border: 1px solid var(--border);
+      border-radius: 10px;
       font-size: 14px;
       font-weight: 600;
       cursor: pointer;
-      background: var(--card-bg);
-      color: var(--text-secondary);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      background: transparent;
+      color: var(--text-muted);
+      transition: all 0.2s ease;
     }
 
-    .tab.active[data-day="1"] { background: var(--day1); color: #0F0F14; border-color: var(--day1); box-shadow: 0 0 20px rgba(192, 132, 252, 0.3); }
-    .tab.active[data-day="2"] { background: var(--day2); color: #0F0F14; border-color: var(--day2); box-shadow: 0 0 20px rgba(129, 140, 248, 0.3); }
-    .tab.active[data-day="3"] { background: var(--day3); color: #0F0F14; border-color: var(--day3); box-shadow: 0 0 20px rgba(103, 232, 249, 0.3); }
-
-    /* Progress */
-    .progress-section {
-      padding: 8px 16px 4px;
+    .tab.active {
+      color: var(--bg);
+      border-color: transparent;
     }
+
+    .tab.active[data-day="1"] { background: var(--day1); box-shadow: 0 0 16px rgba(167,139,250,0.25); }
+    .tab.active[data-day="2"] { background: var(--day2); box-shadow: 0 0 16px rgba(129,140,248,0.25); }
+    .tab.active[data-day="3"] { background: var(--day3); color: #1e1e24; box-shadow: 0 0 16px rgba(103,232,249,0.25); }
+
+    /* ---- PROGRESS ---- */
+    .progress-section { padding: 12px 16px 4px; }
 
     .progress-text {
-      font-size: 13px;
-      color: var(--text-secondary);
+      font-size: 12px;
+      color: var(--text-muted);
       margin-bottom: 6px;
       font-weight: 500;
     }
 
     .progress-bar {
       width: 100%;
-      height: 4px;
-      background: rgba(255,255,255,0.06);
+      height: 3px;
+      background: var(--border);
       border-radius: 2px;
       overflow: hidden;
     }
@@ -135,21 +135,20 @@
     .progress-fill {
       height: 100%;
       border-radius: 2px;
-      transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: width 0.4s ease;
     }
 
-    .progress-fill[data-day="1"] { background: linear-gradient(90deg, var(--day1), #e9d5ff); }
-    .progress-fill[data-day="2"] { background: linear-gradient(90deg, var(--day2), #c7d2fe); }
-    .progress-fill[data-day="3"] { background: linear-gradient(90deg, var(--day3), #a5f3fc); }
+    .progress-fill[data-day="1"] { background: var(--day1); }
+    .progress-fill[data-day="2"] { background: var(--day2); }
+    .progress-fill[data-day="3"] { background: var(--day3); }
 
-    /* Transport accordion */
+    /* ---- TRANSPORT HINT ---- */
     .transport-hint {
-      margin: 8px 16px;
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 14px;
+      margin: 10px 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
       overflow: hidden;
-      backdrop-filter: blur(10px);
     }
 
     .transport-toggle {
@@ -157,7 +156,6 @@
       padding: 12px 16px;
       border: none;
       background: none;
-      font-family: 'Inter', sans-serif;
       font-size: 13px;
       font-weight: 500;
       color: var(--text);
@@ -168,25 +166,22 @@
       align-items: center;
     }
 
-    .transport-toggle::after {
-      content: '\25BC';
+    .transport-toggle .arrow {
       font-size: 10px;
-      color: var(--muted);
-      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      color: var(--text-muted);
+      transition: transform 0.2s ease;
     }
 
-    .transport-hint.open .transport-toggle::after {
-      transform: rotate(180deg);
-    }
+    .transport-hint.open .arrow { transform: rotate(180deg); }
 
     .transport-body {
       max-height: 0;
       overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
       padding: 0 16px;
       font-size: 13px;
-      color: var(--text-secondary);
+      color: var(--text-muted);
       line-height: 1.6;
-      transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), padding 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .transport-hint.open .transport-body {
@@ -194,51 +189,39 @@
       padding: 0 16px 12px;
     }
 
-    /* Cards */
+    /* ---- CARDS ---- */
     .cards {
       padding: 8px 16px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
     }
 
     .card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
       padding: 16px 16px 16px 20px;
       position: relative;
       overflow: hidden;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      backdrop-filter: blur(10px);
+      transition: border-color 0.2s ease, opacity 0.3s ease;
     }
 
-    .card:hover {
-      border-color: rgba(167, 139, 250, 0.2);
-    }
+    .card:hover { border-color: var(--accent-border); }
 
     .card::before {
       content: '';
       position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
+      left: 0; top: 0; bottom: 0;
       width: 3px;
-      border-radius: 0 2px 2px 0;
     }
 
-    .card[data-day="1"]::before { background: linear-gradient(180deg, var(--day1), transparent); }
-    .card[data-day="2"]::before { background: linear-gradient(180deg, var(--day2), transparent); }
-    .card[data-day="3"]::before { background: linear-gradient(180deg, var(--day3), transparent); }
+    .card[data-day="1"]::before { background: var(--day1); }
+    .card[data-day="2"]::before { background: var(--day2); }
+    .card[data-day="3"]::before { background: var(--day3); }
 
-    .card.done {
-      opacity: 0.35;
-    }
-
-    .card.done .card-title {
-      text-decoration: line-through;
-      text-decoration-color: var(--muted);
-    }
+    .card.done { opacity: 0.35; }
+    .card.done .card-title { text-decoration: line-through; text-decoration-color: var(--text-muted); }
 
     .card-top {
       display: flex;
@@ -253,21 +236,18 @@
       gap: 8px;
     }
 
-    .card-icon {
-      font-size: 18px;
-    }
+    .card-icon { font-size: 18px; }
 
     .card-time {
       font-size: 12px;
-      color: var(--text-secondary);
+      color: var(--text-muted);
       font-weight: 500;
       font-variant-numeric: tabular-nums;
     }
 
-    /* Custom checkbox */
+    /* ---- CHECKBOX ---- */
     .checkbox {
-      width: 44px;
-      height: 44px;
+      width: 44px; height: 44px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -276,89 +256,79 @@
     }
 
     .checkbox-circle {
-      width: 26px;
-      height: 26px;
+      width: 24px; height: 24px;
       border-radius: 50%;
-      border: 2px solid rgba(167, 139, 250, 0.25);
+      border: 2px solid rgba(255,255,255,0.12);
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      font-size: 13px;
+      transition: all 0.2s ease;
+      font-size: 12px;
       color: transparent;
     }
 
     .checkbox.checked .checkbox-circle {
       border-color: var(--accent);
       background: var(--accent);
-      color: #0F0F14;
-      box-shadow: 0 0 12px rgba(167, 139, 250, 0.4);
+      color: var(--bg);
     }
 
     .card-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 17px;
+      font-size: 16px;
       font-weight: 600;
       margin-bottom: 4px;
+      letter-spacing: -0.2px;
     }
 
     .card-note {
       font-size: 13px;
-      color: var(--text-secondary);
-      margin-bottom: 6px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
       line-height: 1.4;
     }
 
     .card-desc {
       font-size: 12px;
-      color: var(--text-secondary);
+      color: var(--text-muted);
       margin-bottom: 10px;
       line-height: 1.6;
       padding: 10px 12px;
-      background: rgba(167, 139, 250, 0.05);
+      background: rgba(167,139,250,0.04);
       border-radius: 10px;
-      border-left: 3px solid rgba(167, 139, 250, 0.2);
+      border-left: 2px solid var(--accent-border);
     }
 
-    /* Facts */
-    .card-facts {
-      margin-bottom: 10px;
-    }
+    /* ---- FACTS ---- */
+    .card-facts { margin-bottom: 10px; }
 
     .facts-toggle {
       display: inline-flex;
       align-items: center;
       gap: 6px;
       padding: 6px 12px;
-      background: var(--accent-soft);
-      border: 1px solid rgba(167, 139, 250, 0.15);
+      background: var(--accent-dim);
+      border: 1px solid var(--accent-border);
       border-radius: 8px;
-      font-family: 'Inter', sans-serif;
       font-size: 12px;
       font-weight: 500;
       color: var(--accent);
       cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: background 0.2s ease;
     }
 
-    .facts-toggle:hover {
-      background: rgba(167, 139, 250, 0.2);
-    }
+    .facts-toggle:hover { background: rgba(167,139,250,0.18); }
 
-    .facts-toggle::after {
-      content: '\25BC';
+    .facts-toggle .arrow {
       font-size: 8px;
-      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: transform 0.2s ease;
     }
 
-    .card-facts.open .facts-toggle::after {
-      transform: rotate(180deg);
-    }
+    .card-facts.open .facts-toggle .arrow { transform: rotate(180deg); }
 
     .facts-list {
       max-height: 0;
       overflow: hidden;
-      transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), margin 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: max-height 0.35s ease, margin 0.35s ease;
       margin-top: 0;
     }
 
@@ -369,112 +339,103 @@
 
     .facts-list ol {
       list-style: none;
-      counter-reset: facts;
+      counter-reset: f;
       padding: 0;
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 4px;
     }
 
     .facts-list li {
-      counter-increment: facts;
+      counter-increment: f;
       font-size: 12px;
-      color: var(--text-secondary);
+      color: var(--text-muted);
       line-height: 1.5;
-      padding: 6px 10px 6px 32px;
+      padding: 6px 10px 6px 30px;
       position: relative;
-      background: rgba(167, 139, 250, 0.04);
+      background: rgba(255,255,255,0.02);
       border-radius: 8px;
     }
 
     .facts-list li::before {
-      content: counter(facts);
+      content: counter(f);
       position: absolute;
-      left: 10px;
-      top: 6px;
-      width: 16px;
-      height: 16px;
+      left: 10px; top: 7px;
+      width: 15px; height: 15px;
       border-radius: 50%;
-      background: var(--accent-soft);
+      background: var(--accent-dim);
       color: var(--accent);
-      font-size: 10px;
+      font-size: 9px;
       font-weight: 600;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
-    .card-actions {
-      display: flex;
-      gap: 8px;
-    }
+    /* ---- CARD ACTIONS ---- */
+    .card-actions { display: flex; gap: 8px; }
 
     .card-action {
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      padding: 8px 12px;
-      background: rgba(167, 139, 250, 0.08);
-      border: 1px solid rgba(167, 139, 250, 0.1);
-      border-radius: 10px;
-      font-family: 'Inter', sans-serif;
+      padding: 8px 14px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 8px;
       font-size: 12px;
       font-weight: 500;
       color: var(--text);
       cursor: pointer;
       text-decoration: none;
-      transition: all 0.2s;
+      transition: all 0.15s ease;
+      min-height: 36px;
+      min-width: 36px;
     }
 
-    .card-action:active {
-      background: rgba(167, 139, 250, 0.15);
-      transform: scale(0.97);
-    }
+    .card-action:hover { border-color: var(--accent-border); background: var(--accent-dim); }
+    .card-action:active { transform: scale(0.97); }
 
-    /* Budget card */
+    /* ---- BUDGET ---- */
     .budget-card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
       padding: 18px;
       text-align: center;
-      backdrop-filter: blur(10px);
     }
 
     .budget-card h3 {
-      font-size: 15px;
-      margin-bottom: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 4px;
       color: var(--accent);
     }
 
     .budget-card p {
       font-size: 13px;
-      color: var(--text-secondary);
-      line-height: 1.5;
+      color: var(--text-muted);
     }
 
-    /* Useful section */
+    /* ---- USEFUL / TIPS ---- */
     .useful-section {
       padding: 16px;
       margin-top: 8px;
     }
 
     .useful-section h2 {
-      font-size: 20px;
+      font-size: 18px;
+      font-weight: 700;
       margin-bottom: 12px;
-      background: linear-gradient(135deg, var(--accent), #c4b5fd);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      letter-spacing: -0.3px;
     }
 
     .accordion {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 14px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
       margin-bottom: 8px;
       overflow: hidden;
-      backdrop-filter: blur(10px);
     }
 
     .accordion-toggle {
@@ -482,8 +443,7 @@
       padding: 14px 16px;
       border: none;
       background: none;
-      font-family: 'Inter', sans-serif;
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 600;
       color: var(--text);
       text-align: left;
@@ -493,25 +453,22 @@
       align-items: center;
     }
 
-    .accordion-toggle::after {
-      content: '\25BC';
+    .accordion-toggle .arrow {
       font-size: 10px;
-      color: var(--muted);
-      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      color: var(--text-muted);
+      transition: transform 0.2s ease;
     }
 
-    .accordion.open .accordion-toggle::after {
-      transform: rotate(180deg);
-    }
+    .accordion.open .accordion-toggle .arrow { transform: rotate(180deg); }
 
     .accordion-body {
       max-height: 0;
       overflow: hidden;
       padding: 0 16px;
       font-size: 13px;
-      color: var(--text-secondary);
+      color: var(--text-muted);
       line-height: 1.7;
-      transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), padding 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: max-height 0.35s ease, padding 0.35s ease;
     }
 
     .accordion.open .accordion-body {
@@ -519,98 +476,75 @@
       padding: 0 16px 14px;
     }
 
-    .accordion-body b {
-      color: var(--text);
-      font-weight: 600;
-    }
+    .accordion-body b { color: var(--text); font-weight: 600; }
+    .accordion-body a { color: var(--accent); text-decoration: none; }
+    .accordion-body a:hover { color: var(--accent-hover); }
 
-    .accordion-body a {
-      color: var(--accent);
-      text-decoration: none;
-      transition: opacity 0.2s;
-    }
-
-    .accordion-body a:active {
-      opacity: 0.7;
-    }
-
-    /* Reset button */
+    /* ---- FOOTER ---- */
     .footer {
       text-align: center;
       padding: 24px 16px 32px;
     }
 
     .reset-btn {
-      padding: 12px 24px;
-      border: 1px solid rgba(167, 139, 250, 0.2);
-      border-radius: 12px;
+      padding: 10px 24px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
       background: none;
-      font-family: 'Inter', sans-serif;
       font-size: 13px;
-      color: var(--text-secondary);
+      color: var(--text-muted);
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.2s ease;
     }
 
-    .reset-btn:active {
-      background: rgba(167, 139, 250, 0.1);
-    }
+    .reset-btn:hover { border-color: var(--accent-border); color: var(--text); }
 
-    /* FAB */
+    /* ---- FAB ---- */
     .fab {
       position: fixed;
       bottom: calc(24px + env(safe-area-inset-bottom));
       right: 20px;
-      width: 56px;
-      height: 56px;
+      width: 52px; height: 52px;
       border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent), #8B5CF6);
-      color: #fff;
+      background: var(--accent);
+      color: var(--bg);
       border: none;
-      font-size: 24px;
+      font-size: 22px;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 20px rgba(167, 139, 250, 0.4);
+      box-shadow: 0 4px 20px rgba(167,139,250,0.35);
       cursor: pointer;
       z-index: 200;
       text-decoration: none;
-      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
     .fab:active {
       transform: scale(0.92);
-      box-shadow: 0 2px 10px rgba(167, 139, 250, 0.3);
+      box-shadow: 0 2px 10px rgba(167,139,250,0.2);
     }
 
-    /* Day content visibility */
-    .day-content {
-      display: none;
-    }
+    /* ---- DAY CONTENT ---- */
+    .day-content { display: none; }
 
     .day-content.active {
       display: block;
-      animation: fadeIn 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      animation: fadeUp 0.3s ease;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(8px); }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(6px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Scrollbar */
-    ::-webkit-scrollbar {
-      width: 4px;
-    }
+    /* ---- SCROLLBAR ---- */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 2px; }
 
-    ::-webkit-scrollbar-track {
-      background: transparent;
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: rgba(167, 139, 250, 0.2);
-      border-radius: 2px;
-    }
+    /* ---- SELECTION ---- */
+    ::selection { background: rgba(167,139,250,0.3); color: var(--text); }
   </style>
 </head>
 <body>
@@ -633,7 +567,7 @@
       <div class="progress-bar"><div class="progress-fill" data-day="1" id="progress-fill-1"></div></div>
     </div>
     <div class="transport-hint" id="transport-1">
-      <button class="transport-toggle" onclick="toggleTransport(1)">🚇 Транспорт дня</button>
+      <button class="transport-toggle" onclick="toggleTransport(1)">🚇 Транспорт дня <span class="arrow">▼</span></button>
       <div class="transport-body">AREX Инчхон → Seoul Station (43 мин, ₩9 500) → Линия 1 до Dongmyo</div>
     </div>
     <div class="cards" id="cards-1"></div>
@@ -646,7 +580,7 @@
       <div class="progress-bar"><div class="progress-fill" data-day="2" id="progress-fill-2"></div></div>
     </div>
     <div class="transport-hint" id="transport-2">
-      <button class="transport-toggle" onclick="toggleTransport(2)">🚇 Транспорт дня</button>
+      <button class="transport-toggle" onclick="toggleTransport(2)">🚇 Транспорт дня <span class="arrow">▼</span></button>
       <div class="transport-body">Метро Линия 3 от Донмё → ст. Ангук / Кёнбоккун (~15 мин)</div>
     </div>
     <div class="cards" id="cards-2"></div>
@@ -659,7 +593,7 @@
       <div class="progress-bar"><div class="progress-fill" data-day="3" id="progress-fill-3"></div></div>
     </div>
     <div class="transport-hint" id="transport-3">
-      <button class="transport-toggle" onclick="toggleTransport(3)">🚇 Транспорт дня</button>
+      <button class="transport-toggle" onclick="toggleTransport(3)">🚇 Транспорт дня <span class="arrow">▼</span></button>
       <div class="transport-body">Метро Линия 3 → ст. Кёнбоккун (выход 2). AREX Seoul Station → Инчхон в 15:30 → прибытие 16:13. Вылет 17:50.</div>
     </div>
     <div class="cards" id="cards-3"></div>
@@ -670,7 +604,7 @@
     <h2>Полезное</h2>
 
     <div class="accordion" id="acc-transport">
-      <button class="accordion-toggle" onclick="toggleAccordion('acc-transport')">🚇 Транспорт</button>
+      <button class="accordion-toggle" onclick="toggleAccordion('acc-transport')">🚇 Транспорт <span class="arrow">▼</span></button>
       <div class="accordion-body">
         T-money: ₩2 500 / ~$1.8 / ~165₽<br>
         Тариф метро: ₩1 400–1 600 / $1–1.15 / 90–105₽<br>
@@ -680,7 +614,7 @@
     </div>
 
     <div class="accordion" id="acc-currency">
-      <button class="accordion-toggle" onclick="toggleAccordion('acc-currency')">💱 Курс</button>
+      <button class="accordion-toggle" onclick="toggleAccordion('acc-currency')">💱 Курс <span class="arrow">▼</span></button>
       <div class="accordion-body">
         1 USD ≈ 90 ₽<br>
         1 000 KRW ≈ $0.73 / 66 ₽<br>
@@ -689,7 +623,7 @@
     </div>
 
     <div class="accordion" id="acc-links">
-      <button class="accordion-toggle" onclick="toggleAccordion('acc-links')">📍 Быстрые ссылки Maps</button>
+      <button class="accordion-toggle" onclick="toggleAccordion('acc-links')">📍 Быстрые ссылки Maps <span class="arrow">▼</span></button>
       <div class="accordion-body">
         <a href="https://www.google.com/maps/search/?api=1&query=37.4602,126.4407" target="_blank">Аэропорт Инчхон</a><br>
         <a href="https://www.google.com/maps/search/?api=1&query=37.5547,126.9706" target="_blank">Seoul Station (AREX)</a><br>
@@ -703,7 +637,7 @@
     <h2>Советы</h2>
 
     <div class="accordion" id="acc-mobile">
-      <button class="accordion-toggle" onclick="toggleAccordion('acc-mobile')">📱 Мобильная связь</button>
+      <button class="accordion-toggle" onclick="toggleAccordion('acc-mobile')">📱 Мобильная связь <span class="arrow">▼</span></button>
       <div class="accordion-body">
         <b>eSIM — самый удобный вариант.</b> Купи заранее (Airalo, Yesim, KT Roaming) — активируется при посадке. Безлимитный 4G на 3 дня ~$6–10.<br><br>
         <b>Физическая SIM.</b> В аэропорту Инчхон: стойки KT, SK Telecom, LG U+ на этаже прилёта. ~₩22 000 за 3 дня с безлимитным интернетом. Нужен паспорт.<br><br>
@@ -713,7 +647,7 @@
     </div>
 
     <div class="accordion" id="acc-snacks">
-      <button class="accordion-toggle" onclick="toggleAccordion('acc-snacks')">🍙 Где перекусить на ходу</button>
+      <button class="accordion-toggle" onclick="toggleAccordion('acc-snacks')">🍙 Где перекусить на ходу <span class="arrow">▼</span></button>
       <div class="accordion-body">
         <b>Конбини (магазины у дома).</b> CU, GS25, 7-Eleven — на каждом углу. Онигири ₩1 200, рамён (заварят кипятком) ₩1 500, треугольный кимбап ₩1 000. Есть столики и микроволновки.<br><br>
         <b>Уличная еда.</b> Ищи тележки с вывеской:<br>
@@ -728,7 +662,7 @@
     </div>
 
     <div class="accordion" id="acc-attention">
-      <button class="accordion-toggle" onclick="toggleAccordion('acc-attention')">⚡ На что обратить внимание</button>
+      <button class="accordion-toggle" onclick="toggleAccordion('acc-attention')">⚡ На что обратить внимание <span class="arrow">▼</span></button>
       <div class="accordion-body">
         <b>Обувь.</b> Будешь много ходить (15–20 тыс. шагов/день). Удобные кроссовки обязательны. Во дворцах частично грунтовые дорожки.<br><br>
         <b>Наличные.</b> Карты принимают почти везде, но на рынках (Кванджан, Донмё) и у уличных торговцев — только наличные. Имей при себе ₩50 000–70 000 (~$35–50). Банкоматы с надписью Global ATM снимают без проблем.<br><br>
@@ -949,26 +883,17 @@
     let currentDay = 1;
 
     function getProgress() {
-      try {
-        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
-      } catch {
-        return {};
-      }
+      try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
+      catch { return {}; }
     }
 
-    function saveProgress(progress) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
-    }
+    function saveProgress(p) { localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); }
 
     function toggleCheck(day, itemId) {
-      const progress = getProgress();
-      const key = `day${day}_item${itemId}`;
-      if (progress[key]) {
-        delete progress[key];
-      } else {
-        progress[key] = true;
-      }
-      saveProgress(progress);
+      const p = getProgress();
+      const k = `day${day}_item${itemId}`;
+      p[k] ? delete p[k] : p[k] = true;
+      saveProgress(p);
       renderDay(day);
     }
 
@@ -982,7 +907,6 @@
       const progress = getProgress();
       const container = document.getElementById(`cards-${day}`);
       container.innerHTML = '';
-
       let doneCount = 0;
 
       data.items.forEach(item => {
@@ -996,14 +920,11 @@
 
         const factsHtml = item.facts ? `
           <div class="card-facts" id="facts-${day}-${item.id}">
-            <button class="facts-toggle" onclick="toggleFacts(${day}, ${item.id})">✦ 5 интересных фактов</button>
+            <button class="facts-toggle" onclick="toggleFacts(${day}, ${item.id})">✦ 5 фактов <span class="arrow">▼</span></button>
             <div class="facts-list">
-              <ol>
-                ${item.facts.map(f => `<li>${f}</li>`).join('')}
-              </ol>
+              <ol>${item.facts.map(f => `<li>${f}</li>`).join('')}</ol>
             </div>
-          </div>
-        ` : '';
+          </div>` : '';
 
         card.innerHTML = `
           <div class="card-top">
@@ -1022,22 +943,17 @@
           <div class="card-actions">
             <a class="card-action" href="https://www.google.com/maps/search/?api=1&query=${item.lat},${item.lng}" target="_blank">📍 Maps</a>
             <a class="card-action" href="https://www.google.com/maps/dir/?api=1&destination=${item.lat},${item.lng}" target="_blank">🗺 Маршрут</a>
-          </div>
-        `;
-
+          </div>`;
         container.appendChild(card);
       });
 
-      // Budget card
       const budget = document.createElement('div');
       budget.className = 'budget-card';
       budget.innerHTML = `<h3>💰 Бюджет дня</h3><p>${data.budget}</p>`;
       container.appendChild(budget);
 
-      // Progress
-      const total = data.items.length;
-      document.getElementById(`progress-text-${day}`).textContent = `Выполнено: ${doneCount} / ${total}`;
-      document.getElementById(`progress-fill-${day}`).style.width = `${(doneCount / total) * 100}%`;
+      document.getElementById(`progress-text-${day}`).textContent = `Выполнено: ${doneCount} / ${data.items.length}`;
+      document.getElementById(`progress-fill-${day}`).style.width = `${(doneCount / data.items.length) * 100}%`;
     }
 
     function switchDay(day) {
@@ -1072,7 +988,6 @@
       return 1;
     }
 
-    // Init
     const startDay = detectCurrentDay();
     for (let d = 1; d <= 3; d++) renderDay(d);
     switchDay(startDay);
