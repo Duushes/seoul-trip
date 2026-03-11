@@ -4,27 +4,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="theme-color" content="#1e1e24">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="theme-color" content="#fafafa">
   <title>Seoul Trip 2026</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🇰🇷</text></svg>">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #1e1e24;
-      --bg-card: #26262e;
-      --text: #ececef;
-      --text-muted: #8b8b9e;
-      --accent: #a78bfa;
-      --accent-hover: #c4b5fd;
-      --accent-dim: rgba(167,139,250,0.10);
-      --accent-border: rgba(167,139,250,0.15);
-      --border: rgba(255,255,255,0.06);
-      --day1: #a78bfa;
-      --day2: #818cf8;
-      --day3: #67e8f9;
-      --done: #52525b;
-      --success: #34d399;
+      --bg: #fafafa;
+      --bg-card: #ffffff;
+      --text: #171717;
+      --text-muted: #6b6b7b;
+      --accent: #7c3aed;
+      --accent-hover: #6d28d9;
+      --accent-dim: rgba(124,58,237,0.08);
+      --accent-border: rgba(124,58,237,0.15);
+      --border: rgba(0,0,0,0.07);
+      --day1: #7c3aed;
+      --day2: #6366f1;
+      --day3: #0891b2;
+      --done: #a1a1aa;
+      --success: #059669;
     }
 
     * { margin:0; padding:0; box-sizing:border-box; }
@@ -32,7 +32,7 @@
     body {
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
       background-color: var(--bg);
-      background-image: radial-gradient(rgba(167,139,250,0.06) 1px, transparent 1px);
+      background-image: radial-gradient(rgba(124,58,237,0.07) 1px, transparent 1px);
       background-size: 20px 20px;
       color: var(--text);
       -webkit-font-smoothing: antialiased;
@@ -60,7 +60,7 @@
       width: 400px;
       height: 300px;
       border-radius: 50%;
-      background: radial-gradient(ellipse, rgba(167,139,250,0.08) 0%, transparent 70%);
+      background: radial-gradient(ellipse, rgba(124,58,237,0.06) 0%, transparent 70%);
       pointer-events: none;
     }
 
@@ -84,7 +84,7 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(30,30,36,0.8);
+      background: rgba(250,250,250,0.85);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       padding: 10px 16px;
@@ -106,13 +106,13 @@
     }
 
     .tab.active {
-      color: var(--bg);
+      color: #ffffff;
       border-color: transparent;
     }
 
-    .tab.active[data-day="1"] { background: var(--day1); box-shadow: 0 0 16px rgba(167,139,250,0.25); }
-    .tab.active[data-day="2"] { background: var(--day2); box-shadow: 0 0 16px rgba(129,140,248,0.25); }
-    .tab.active[data-day="3"] { background: var(--day3); color: #1e1e24; box-shadow: 0 0 16px rgba(103,232,249,0.25); }
+    .tab.active[data-day="1"] { background: var(--day1); box-shadow: 0 2px 12px rgba(124,58,237,0.2); }
+    .tab.active[data-day="2"] { background: var(--day2); box-shadow: 0 2px 12px rgba(99,102,241,0.2); }
+    .tab.active[data-day="3"] { background: var(--day3); box-shadow: 0 2px 12px rgba(8,145,178,0.2); }
 
     /* ---- PROGRESS ---- */
     .progress-section { padding: 12px 16px 4px; }
@@ -207,6 +207,7 @@
       transition: border-color 0.2s ease, opacity 0.3s ease;
     }
 
+    .card { box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
     .card:hover { border-color: var(--accent-border); }
 
     .card::before {
@@ -258,7 +259,7 @@
     .checkbox-circle {
       width: 24px; height: 24px;
       border-radius: 50%;
-      border: 2px solid rgba(255,255,255,0.12);
+      border: 2px solid rgba(0,0,0,0.12);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -270,7 +271,7 @@
     .checkbox.checked .checkbox-circle {
       border-color: var(--accent);
       background: var(--accent);
-      color: var(--bg);
+      color: #ffffff;
     }
 
     .card-title {
@@ -293,9 +294,9 @@
       margin-bottom: 10px;
       line-height: 1.6;
       padding: 10px 12px;
-      background: rgba(167,139,250,0.04);
+      background: rgba(124,58,237,0.03);
       border-radius: 10px;
-      border-left: 2px solid var(--accent-border);
+      border-left: 2px solid rgba(124,58,237,0.15);
     }
 
     /* ---- FACTS ---- */
@@ -353,7 +354,7 @@
       line-height: 1.5;
       padding: 6px 10px 6px 30px;
       position: relative;
-      background: rgba(255,255,255,0.02);
+      background: rgba(124,58,237,0.03);
       border-radius: 8px;
     }
 
@@ -380,7 +381,7 @@
       align-items: center;
       gap: 4px;
       padding: 8px 14px;
-      background: rgba(255,255,255,0.04);
+      background: rgba(124,58,237,0.04);
       border: 1px solid var(--border);
       border-radius: 8px;
       font-size: 12px;
@@ -507,13 +508,13 @@
       width: 52px; height: 52px;
       border-radius: 50%;
       background: var(--accent);
-      color: var(--bg);
+      color: #ffffff;
       border: none;
       font-size: 22px;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 20px rgba(167,139,250,0.35);
+      box-shadow: 0 4px 20px rgba(124,58,237,0.3);
       cursor: pointer;
       z-index: 200;
       text-decoration: none;
@@ -522,7 +523,7 @@
 
     .fab:active {
       transform: scale(0.92);
-      box-shadow: 0 2px 10px rgba(167,139,250,0.2);
+      box-shadow: 0 2px 10px rgba(124,58,237,0.2);
     }
 
     /* ---- DAY CONTENT ---- */
@@ -541,10 +542,10 @@
     /* ---- SCROLLBAR ---- */
     ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 2px; }
+    ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 2px; }
 
     /* ---- SELECTION ---- */
-    ::selection { background: rgba(167,139,250,0.3); color: var(--text); }
+    ::selection { background: rgba(124,58,237,0.15); color: var(--text); }
   </style>
 </head>
 <body>
